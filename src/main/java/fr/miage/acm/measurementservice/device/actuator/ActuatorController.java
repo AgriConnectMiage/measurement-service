@@ -1,6 +1,7 @@
 package fr.miage.acm.measurementservice.device.actuator;
 
 import fr.miage.acm.measurementservice.api.ApiActuator;
+import fr.miage.acm.measurementservice.api.ApiFarmer;
 import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
@@ -24,7 +25,14 @@ public class ActuatorController {
 
     @GetMapping
     public List<ApiActuator> getAllActuators() {
-        return actuatorService.findAll().stream().map(ApiActuator::new).toList();
+        return actuatorService.findAll().stream()
+                .map(actuator -> {
+                    Farmer farmer = actuator.getField().getFarmer();
+                    ApiFarmer apiFarmer = new ApiFarmer(farmer);
+                    return new ApiActuator(actuator);
+                })
+                .toList();
+
     }
 
     @GetMapping("/{id}")

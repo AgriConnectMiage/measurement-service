@@ -24,6 +24,18 @@ public class ApiFarmer {
         this.fieldSize = farmer.getFieldSize();
     }
 
+    public ApiFarmer() {
+    }
+
+    public ApiFarmer(UUID id, String firstName, String lastName, String email, Integer fieldSize) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.fieldSize = fieldSize;
+    }
+
+
     @Override
     public String toString() {
         return "Farmer{" +

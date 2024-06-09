@@ -21,4 +21,19 @@ public class ApiField {
         this.ycoord = field.getYcoord();
         this.farmer = new ApiFarmer(field.getFarmer());
     }
+
+    public String getCoord() {
+        return xcoord + "," + ycoord;
+    }
+
+    public ApiField() {
+    }
+
+    public ApiField(UUID id, Integer xcoord, Integer ycoord, ApiFarmer farmer) {
+        this.id = id;
+        this.xcoord = xcoord;
+        this.ycoord = ycoord;
+        this.farmer = farmer;
+    }
+
 }
