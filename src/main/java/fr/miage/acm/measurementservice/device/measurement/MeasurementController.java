@@ -1,7 +1,6 @@
 package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
-import fr.miage.acm.measurementservice.device.actuator.WateringScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,5 +18,10 @@ public class MeasurementController {
     @PostMapping("/watering")
     public Measurement createWateringMeasurement(@RequestBody ApiWateringScheduler apiWateringScheduler) {
         return measurementService.createWateringMeasurement(apiWateringScheduler);
+    }
+
+    @DeleteMapping("/sensor/{sensorId}/unschedule")
+    public void unscheduleSensorTask(@PathVariable Long sensorId) {
+        measurementService.unscheduleSensorTask(sensorId);
     }
 }
