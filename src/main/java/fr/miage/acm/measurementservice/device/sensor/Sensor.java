@@ -4,6 +4,7 @@ import fr.miage.acm.measurementservice.device.Device;
 import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -20,8 +21,10 @@ public class Sensor extends Device {
     @ManyToOne
     @JoinColumn(name = "field_id")
     private Field field;
-    private Integer currentTemperature;
-    private Integer currentHumidity;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float currentTemperature;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float currentHumidity;
 
     public Sensor(Farmer farmer) {
         super(farmer);

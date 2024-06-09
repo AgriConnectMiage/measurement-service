@@ -4,6 +4,8 @@ import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/measurements")
 public class MeasurementController {
@@ -20,8 +22,13 @@ public class MeasurementController {
         return measurementService.createWateringMeasurement(apiWateringScheduler);
     }
 
-    @DeleteMapping("/sensor/{sensorId}/unschedule")
-    public void unscheduleSensorTask(@PathVariable Long sensorId) {
+    @PostMapping("/sensor/{sensorId}/schedule")
+    public void scheduleSensorTask(@PathVariable UUID sensorId) {
+        measurementService.scheduleSensorTask(sensorId);
+    }
+
+    @DeleteMapping("/sensor/{sensorId}/schedule")
+    public void unscheduleSensorTask(@PathVariable UUID sensorId) {
         measurementService.unscheduleSensorTask(sensorId);
     }
 }

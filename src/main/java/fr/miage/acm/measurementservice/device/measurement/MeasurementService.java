@@ -1,18 +1,15 @@
 package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
-import fr.miage.acm.measurementservice.device.actuator.WateringScheduler;
+import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.device.sensor.Sensor;
 import fr.miage.acm.measurementservice.device.sensor.SensorService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
@@ -23,7 +20,7 @@ public class MeasurementService {
     private final Random random = new Random();
     private final TaskScheduler taskScheduler;
     private final SensorService sensorService;
-    private final Map<Long, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
+    private final Map<UUID, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
 
     public MeasurementService(MeasurementRepository measurementRepository, TaskScheduler taskScheduler, SensorService sensorService) {
         this.measurementRepository = measurementRepository;
@@ -46,42 +43,97 @@ public class MeasurementService {
     public void scheduleSensorTasks() {
         List<Sensor> sensors = sensorService.findAll();
         for (Sensor sensor : sensors) {
-            scheduleSensorTask(sensor);
+            if (sensor.getState() == DeviceState.ON) {
+                scheduleSensorTask(sensor);
+            }
         }
     }
 
     private void scheduleSensorTask(Sensor sensor) {
         // Scheduled task to generate a temperature measurement every interval
-        Long sensorIdAsLong = sensor.getId().getLeastSignificantBits();
         long intervalInMillis = (long) (sensor.getInterval() * 1000);
-        ScheduledFuture<?> scheduledTask = taskScheduler.scheduleAtFixedRate(() -> generateTemperatureMeasurement(sensor), intervalInMillis);
-        scheduledTasks.put(sensorIdAsLong, scheduledTask);
+        ScheduledFuture<?> scheduledTask = taskScheduler.scheduleAtFixedRate(() -> {
+            generateSensorMeasurement(sensor);
+        }, intervalInMillis);
+        scheduledTasks.put(sensor.getId(), scheduledTask);
     }
 
 
-    private void generateTemperatureMeasurement(Sensor sensor) {
+    // Schedule sensor task with id
+    public void scheduleSensorTask(UUID sensorId) {
+        Optional<Sensor> sensor = sensorService.findById(sensorId);
+        sensor.ifPresent(this::scheduleSensorTask);
+    }
+
+
+    private void generateSensorMeasurement(Sensor sensor) {
         Measurement measurement = new Measurement();
         measurement.setDateTime(LocalDateTime.now());
-        measurement.setTemperature(generateRandomTemperature());
         measurement.setDeviceId(sensor.getId());
-        // Définissez les autres champs nécessaires pour l'enregistrement de la mesure
-        // measurement.setFarmerEmail(...);
-        // measurement.setFieldCoord(...);
+        measurement.setFarmerEmail(sensor.getFarmer().getEmail());
+        measurement.setFieldCoord(sensor.getField().getCoord());
 
+        float newTemperature = generateRandomTemperature(sensor);
+        measurement.setTemperature(newTemperature);
+        float newHumiditiy = generateRandomHumidity(sensor);
+        measurement.setHumidity(newHumiditiy);
+
+        sensor.setCurrentTemperature(newTemperature);
+        sensor.setCurrentHumidity(newHumiditiy);
         measurementRepository.save(measurement);
+        sensorService.save(sensor);
     }
 
-    private Float generateRandomTemperature() {
-        // Random generation of a temperature between 0 and 45 degrees
-        return random.nextFloat() * 45;
+    private Float generateRandomTemperature(Sensor sensor) {
+        // Generate a random variation between -0.5 and +0.5 degrees
+        float newTemperature;
+        // Just generate a random temperature between 0 and 45 degrees if current temperature is null
+        if (sensor.getCurrentTemperature() == null) {
+            newTemperature = (float) (Math.round((random.nextFloat() * 45) * 10) / 10.0);
+        } else {
+            float variation = (random.nextFloat() - 0.5f) * 1.0f;
+            newTemperature = sensor.getCurrentTemperature() + variation;
+
+
+            if (newTemperature < 0) {
+                newTemperature = 0;
+            } else if (newTemperature > 45) {
+                newTemperature = 45;
+            }
+            newTemperature = Math.round(newTemperature * 10) / 10.0f;
+        }
+
+        return newTemperature;
     }
 
-    public void unscheduleSensorTask(Long sensorId) {
+    private Float generateRandomHumidity(Sensor sensor) {
+        // Generate a random variation between -0.5 and +0.5%
+        float newHumidity;
+        // Just generate a random humidity between 0 and 100% if current humidity is null
+        if (sensor.getCurrentHumidity() == null) {
+            newHumidity = (float) (Math.round((random.nextFloat() * 100) * 10) / 10.0);
+        } else {
+            float variation = (random.nextFloat() - 0.5f) * 1.0f;
+            newHumidity = sensor.getCurrentHumidity() + variation;
+
+            if (newHumidity < 0) {
+                newHumidity = 0;
+            } else if (newHumidity > 100) {
+                newHumidity = 100;
+            }
+            newHumidity = Math.round(newHumidity * 10) / 10.0f;
+        }
+
+        return newHumidity;
+    }
+
+    public void unscheduleSensorTask(UUID sensorId) {
         ScheduledFuture<?> scheduledTask = scheduledTasks.get(sensorId);
         if (scheduledTask != null) {
             scheduledTask.cancel(false);
             scheduledTasks.remove(sensorId);
         }
     }
+
 
 }

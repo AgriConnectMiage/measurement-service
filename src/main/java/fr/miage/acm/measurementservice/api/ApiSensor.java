@@ -16,8 +16,8 @@ public class ApiSensor {
     private DeviceState state;
     private float interval;
     private Field field;
-    private Integer currentTemperature;
-    private Integer currentHumidity;
+    private Float currentTemperature;
+    private Float currentHumidity;
 
     public ApiSensor(Sensor sensor) {
         this.id = sensor.getId();

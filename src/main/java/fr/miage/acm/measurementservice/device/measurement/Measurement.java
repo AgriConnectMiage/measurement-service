@@ -1,10 +1,7 @@
 package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.device.Device;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,9 +23,12 @@ public class Measurement {
     private String fieldCoord;
     private UUID deviceId;
 
-    private Float humidity; // Using Float to allow null values
-    private Float temperature; // Using Float to allow null values
-    private Float duration; // Using Float to allow null values
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float humidity;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float temperature;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float duration;
 
     public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float duration) {
         this.id = id;
