@@ -64,10 +64,10 @@ public class FarmerService {
             }
             return farmer;
         } else {
-            System.out.println("Farmer already exists");
+            throw new IllegalArgumentException("Farmer with email " + email + " already exists");
         }
-        return null;
     }
+
 
     public void removeFarmer(Farmer farmer) {
         fieldService.deleteFieldsByFarmer(farmer);

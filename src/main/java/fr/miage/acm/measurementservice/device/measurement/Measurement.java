@@ -1,6 +1,10 @@
-package fr.miage.acm.measurementservice.device;
+package fr.miage.acm.measurementservice.device.measurement;
 
-import jakarta.persistence.*;
+import fr.miage.acm.measurementservice.device.Device;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,18 +22,19 @@ public class Measurement {
 
     private LocalDateTime dateTime;
 
-    @ManyToOne
-    @JoinColumn(name = "device_id", insertable = false, updatable = false)
-    private Device device;
+    private String farmerEmail;
+    private String fieldCoord;
+    private UUID deviceId;
 
-    private Integer humidity;
-    private Integer temperature;
-    private Integer duration;
+    private Float humidity; // Using Float to allow null values
+    private Float temperature; // Using Float to allow null values
+    private Float duration; // Using Float to allow null values
 
-    public Measurement(UUID id, LocalDateTime dateTime, Device device, Integer humidity, Integer temperature, Integer duration) {
+    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float duration) {
         this.id = id;
         this.dateTime = dateTime;
-        this.device = device;
+        this.deviceId = device.getId();
+        this.farmerEmail = device.getFarmer().getEmail();
         this.humidity = humidity;
         this.temperature = temperature;
         this.duration = duration;
@@ -44,7 +49,7 @@ public class Measurement {
         return "Measurement{" +
                 "id=" + id +
                 ", dateTime=" + dateTime +
-                ", source=" + device +
+                ", sourceId=" + deviceId +
                 ", humidity=" + humidity +
                 ", temperature=" + temperature +
                 ", duration=" + duration +
