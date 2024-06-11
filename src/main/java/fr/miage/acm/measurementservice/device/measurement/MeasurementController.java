@@ -24,11 +24,13 @@ public class MeasurementController {
 
     @PostMapping("/sensor/{sensorId}/schedule")
     public void scheduleSensorTask(@PathVariable UUID sensorId) {
+        System.out.println("Scheduling sensor task for sensor " + sensorId);
         measurementService.scheduleSensorTask(sensorId);
     }
 
     @DeleteMapping("/sensor/{sensorId}/schedule")
     public void unscheduleSensorTask(@PathVariable UUID sensorId) {
+        System.out.println("Unscheduling sensor task for sensor " + sensorId);
         measurementService.unscheduleSensorTask(sensorId);
     }
 }

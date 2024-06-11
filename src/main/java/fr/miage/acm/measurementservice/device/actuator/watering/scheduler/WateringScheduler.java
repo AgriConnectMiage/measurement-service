@@ -1,5 +1,6 @@
-package fr.miage.acm.measurementservice.device.actuator;
+package fr.miage.acm.measurementservice.device.actuator.watering.scheduler;
 
+import fr.miage.acm.measurementservice.device.actuator.Actuator;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

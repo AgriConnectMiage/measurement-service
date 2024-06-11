@@ -4,6 +4,7 @@ import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
 import fr.miage.acm.measurementservice.field.FieldRepository;
+import fr.miage.acm.measurementservice.field.FieldService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,8 @@ public class ActuatorService {
 
     private ActuatorRepository actuatorRepository;
 
-    private FieldRepository fieldRepository;
-
-    public ActuatorService(ActuatorRepository actuatorRepository, FieldRepository fieldRepository) {
+    public ActuatorService(ActuatorRepository actuatorRepository, FieldService fieldService) {
         this.actuatorRepository = actuatorRepository;
-        this.fieldRepository = fieldRepository;
     }
 
     public List<Actuator> findAll() {
@@ -41,6 +39,10 @@ public class ActuatorService {
 
     public List<Actuator> findByFarmer(Farmer farmer) {
         return actuatorRepository.findByFarmer(farmer);
+    }
+
+    public Optional<Actuator> findByField(Field field) {
+        return actuatorRepository.findByField(field);
     }
 
     public Actuator addActuator(Farmer farmer) {

@@ -69,11 +69,6 @@ public class SensorService {
         return sensorRepository.save(sensor);
     }
 
-    public Sensor changeState(Sensor sensor, DeviceState state) {
-        sensor.setState(state);
-        return sensorRepository.save(sensor);
-    }
-
     public Sensor changeInterval(Sensor sensor, int interval) {
         sensor.setInterval(interval);
         return sensorRepository.save(sensor);
