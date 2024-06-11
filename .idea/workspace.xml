@@ -9,11 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: Implementing measurement scheduling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/api/ApiSensor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/api/ApiSensor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/Measurement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/Measurement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/Sensor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/Sensor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,35 +55,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.MeasurementServiceApplication (1).executor": "Run",
-    "Spring Boot.MeasurementServiceApplication.executor": "Run",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "feat/setup-measurement",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/yohan/IdeaProjects/AgriConnectMiage/measurement-service",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MeasurementServiceApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MeasurementServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/setup-measurement&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yohan/IdeaProjects/AgriConnectMiage/measurement-service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\yohan\IdeaProjects\AgriConnectMiage\measurement-service\src\main\java\fr\miage\acm\measurementservice" />
