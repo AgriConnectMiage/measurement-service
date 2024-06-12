@@ -7,7 +7,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: refactored" />
+    <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: changed duration to wateringDuration">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/77b334d0-8190-42b6-af98-e1e054fb99ae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/77b334d0-8190-42b6-af98-e1e054fb99ae.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/77b334d0-8190-42b6-af98-e1e054fb99ae/storage_v2/_src_/database/ACM.a_wAAA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/77b334d0-8190-42b6-af98-e1e054fb99ae/storage_v2/_src_/database/ACM.a_wAAA/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -124,6 +131,7 @@
       <workItem from="1718201874678" duration="2074000" />
       <workItem from="1718205032632" duration="9000" />
       <workItem from="1718206668211" duration="600000" />
+      <workItem from="1718207430431" duration="3037000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Implementing measurement scheduling">
       <option name="closed" value="true" />
@@ -157,7 +165,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718207232711</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="chore: changed farmeremail to farmerid">
+      <option name="closed" value="true" />
+      <created>1718207745077</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1718207745077</updated>
+    </task>
+    <task id="LOCAL-00006" summary="chore: changed duration to wateringDuration">
+      <option name="closed" value="true" />
+      <created>1718209590322</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1718209590322</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +219,8 @@
     <MESSAGE value="chore: new workspace file" />
     <MESSAGE value="chore: refactored controllers and added humiditiy increase and temperature decrease whenever the field is getting watered" />
     <MESSAGE value="chore: refactored" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: refactored" />
+    <MESSAGE value="chore: changed farmeremail to farmerid" />
+    <MESSAGE value="chore: changed duration to wateringDuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: changed duration to wateringDuration" />
   </component>
 </project>

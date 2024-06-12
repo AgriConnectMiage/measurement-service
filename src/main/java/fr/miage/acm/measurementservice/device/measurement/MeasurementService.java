@@ -41,6 +41,7 @@ public class MeasurementService {
         measurement.setWateringDuration(apiWateringScheduler.getDuration());
         measurement.setDeviceId(apiWateringScheduler.getActuator().getId());
         measurementRepository.save(measurement);
+        System.out.println("New watering measurement: " + measurement);
         return measurement;
     }
 
@@ -86,7 +87,7 @@ public class MeasurementService {
         sensor.setLastTemperatureMeasured(newTemperature);
         sensor.setLastHumidityMeasured(newHumiditiy);
         sensor.setLastMeasurementTime(LocalDateTime.now());
-        System.out.println("New measurement: " + measurement);
+        System.out.println("New sensor measurement: " + measurement);
         measurementRepository.save(measurement);
         sensorService.save(sensor);
     }
