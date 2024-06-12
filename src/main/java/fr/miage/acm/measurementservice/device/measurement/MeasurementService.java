@@ -36,7 +36,7 @@ public class MeasurementService {
     public Measurement createWateringMeasurement(ApiWateringScheduler apiWateringScheduler) {
         Measurement measurement = new Measurement();
         measurement.setDateTime(LocalDateTime.now());
-        measurement.setFarmerEmail(apiWateringScheduler.getActuator().getFarmer().getEmail());
+        measurement.setFarmerId(apiWateringScheduler.getActuator().getFarmer().getId());
         measurement.setFieldCoord(apiWateringScheduler.getActuator().getField().getCoord());
         measurement.setDuration(apiWateringScheduler.getDuration());
         measurement.setDeviceId(apiWateringScheduler.getActuator().getId());
@@ -75,7 +75,7 @@ public class MeasurementService {
         Measurement measurement = new Measurement();
         measurement.setDateTime(LocalDateTime.now());
         measurement.setDeviceId(sensor.getId());
-        measurement.setFarmerEmail(sensor.getFarmer().getEmail());
+        measurement.setFarmerId(sensor.getFarmer().getId());
         measurement.setFieldCoord(sensor.getField().getCoord());
 
         float newTemperature = generateRandomTemperature(sensor);

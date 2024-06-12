@@ -19,7 +19,7 @@ public class Measurement {
 
     private LocalDateTime dateTime;
 
-    private String farmerEmail;
+    private UUID farmerId;
     private String fieldCoord;
     private UUID deviceId;
 
@@ -34,7 +34,7 @@ public class Measurement {
         this.id = id;
         this.dateTime = dateTime;
         this.deviceId = device.getId();
-        this.farmerEmail = device.getFarmer().getEmail();
+        this.farmerId = device.getFarmer().getId();
         this.humidity = humidity;
         this.temperature = temperature;
         this.duration = duration;

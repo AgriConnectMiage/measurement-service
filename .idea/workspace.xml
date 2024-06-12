@@ -7,15 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: refactored controllers and added humiditiy increase and temperature decrease whenever the field is getting watered">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/api/ApiSensor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/api/ApiSensor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/actuator/ActuatorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/actuator/ActuatorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/Sensor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/Sensor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/SensorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/SensorService.java" afterDir="false" />
-    </list>
+    <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: refactored" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,7 +123,7 @@
       <workItem from="1717947225614" duration="6217000" />
       <workItem from="1718201874678" duration="2074000" />
       <workItem from="1718205032632" duration="9000" />
-      <workItem from="1718206668211" duration="409000" />
+      <workItem from="1718206668211" duration="600000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Implementing measurement scheduling">
       <option name="closed" value="true" />
@@ -157,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718122373960</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="chore: refactored">
+      <option name="closed" value="true" />
+      <created>1718207232711</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1718207232711</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,7 +174,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="feat/setup-measurement" />
                       </list>
                     </value>
                   </entry>
@@ -194,6 +194,7 @@
     <MESSAGE value="chore: Implementing measurement scheduling" />
     <MESSAGE value="chore: new workspace file" />
     <MESSAGE value="chore: refactored controllers and added humiditiy increase and temperature decrease whenever the field is getting watered" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: refactored controllers and added humiditiy increase and temperature decrease whenever the field is getting watered" />
+    <MESSAGE value="chore: refactored" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: refactored" />
   </component>
 </project>
