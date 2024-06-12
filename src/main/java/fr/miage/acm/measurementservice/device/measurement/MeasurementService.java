@@ -38,7 +38,7 @@ public class MeasurementService {
         measurement.setDateTime(LocalDateTime.now());
         measurement.setFarmerId(apiWateringScheduler.getActuator().getFarmer().getId());
         measurement.setFieldCoord(apiWateringScheduler.getActuator().getField().getCoord());
-        measurement.setDuration(apiWateringScheduler.getDuration());
+        measurement.setWateringDuration(apiWateringScheduler.getDuration());
         measurement.setDeviceId(apiWateringScheduler.getActuator().getId());
         measurementRepository.save(measurement);
         return measurement;
