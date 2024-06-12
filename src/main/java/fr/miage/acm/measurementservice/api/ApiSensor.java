@@ -15,7 +15,7 @@ public class ApiSensor {
 
     private UUID id;
     private DeviceState state;
-    private float interval;
+    private int interval;
     private Field field;
     private Float lastTemperatureMeasured;
     private Float lastHumidityMeasured;

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Sensor extends Device {
     // Interval between two measurements in seconds
-    private float interval;
+    private int interval;
 
     @ManyToOne
     @JoinColumn(name = "field_id")
@@ -66,7 +66,7 @@ public class Sensor extends Device {
         return;
     }
 
-    public void setInterval(float interval) {
+    public void setInterval(int interval) {
         if (interval <= 0) {
             throw new IllegalArgumentException("Interval must be positive");
         }

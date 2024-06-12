@@ -33,4 +33,11 @@ public class MeasurementController {
         System.out.println("Unscheduling sensor task for sensor " + sensorId);
         measurementService.unscheduleSensorTask(sensorId);
     }
+
+    @PutMapping("/sensor/{sensorId}/interval")
+    public void changeSensorInterval(@PathVariable UUID sensorId, @RequestParam int interval) {
+        System.out.println("Changing interval of sensor " + sensorId + " to " + interval);
+        measurementService.changeSensorInterval(sensorId, interval);
+    }
+
 }

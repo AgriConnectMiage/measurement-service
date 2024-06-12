@@ -3,7 +3,6 @@ package fr.miage.acm.measurementservice.device.actuator;
 import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
-import fr.miage.acm.measurementservice.field.FieldRepository;
 import fr.miage.acm.measurementservice.field.FieldService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +22,6 @@ public class ActuatorService {
 
     public List<Actuator> findAll() {
         return actuatorRepository.findAll();
-    }
-
-    public Actuator save(Actuator actuator) {
-        return actuatorRepository.save(actuator);
     }
 
     public void delete(Actuator actuator) {
