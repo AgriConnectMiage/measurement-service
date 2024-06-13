@@ -1,5 +1,6 @@
 package fr.miage.acm.measurementservice.device.actuator.watering.scheduler;
 
+import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import fr.miage.acm.measurementservice.client.ManagementServiceClient;
 import fr.miage.acm.measurementservice.client.WateringServiceClient;
 import fr.miage.acm.measurementservice.device.actuator.Actuator;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class WateringSchedulerService {
@@ -29,7 +31,7 @@ public class WateringSchedulerService {
     }
 
 
-    public Optional<WateringScheduler> findByActuator(Actuator actuator) {
+    public Optional<ApiWateringScheduler> findByActuator(Actuator actuator) {
         return managementServiceClient.findByActuator(actuator.getId());
     }
 

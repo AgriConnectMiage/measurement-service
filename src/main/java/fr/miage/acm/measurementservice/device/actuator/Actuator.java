@@ -1,5 +1,6 @@
 package fr.miage.acm.measurementservice.device.actuator;
 
+import fr.miage.acm.measurementservice.api.ApiActuator;
 import fr.miage.acm.measurementservice.device.Device;
 import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
@@ -28,6 +29,11 @@ public class Actuator extends Device {
         // Default constructor required by JPA
     }
 
+    public Actuator(ApiActuator apiActuator) {
+        super(new Farmer(apiActuator.getFarmer()));
+        this.field = new Field(apiActuator.getField());
+    }
+
     @Override
     public String toString() {
         return "Actuator{" +
@@ -36,16 +42,5 @@ public class Actuator extends Device {
                 ", field=" + getField() +
                 ", farmer=" + getFarmer() +
                 '}';
-    }
-
-    public void setState(DeviceState newState) {
-        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && this.getField() == null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
-        }
-        if (newState == DeviceState.NOT_ASSIGNED && this.getField() != null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
-        }
-        this.state = newState;
-        return;
     }
 }

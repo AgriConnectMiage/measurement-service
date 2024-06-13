@@ -1,5 +1,6 @@
 package fr.miage.acm.measurementservice.farmer;
 
+import fr.miage.acm.measurementservice.api.ApiFarmer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,15 @@ public class Farmer {
 
     public Farmer() {
         // Default constructor required by JPA
+    }
+
+    public Farmer(ApiFarmer apiFarmer) {
+        this.id = apiFarmer.getId();
+        this.firstName = apiFarmer.getFirstName();
+        this.lastName = apiFarmer.getLastName();
+        this.email = apiFarmer.getEmail();
+        this.password = apiFarmer.getPassword();
+        this.fieldSize = apiFarmer.getFieldSize();
     }
 
     @Override

@@ -26,7 +26,7 @@ public class SensorService {
     }
 
 
-    public Sensor updateMeasures(UUID sensorId, float newTemperature, float newHumidity) {
-        return managementServiceClient.updateMeasures(sensorId, newTemperature, newHumidity);
+    public void updateMeasures(UUID sensorId, float newTemperature, float newHumidity) {
+        managementServiceClient.updateSensorMeasure(sensorId, newTemperature, newHumidity);
     }
 }

@@ -19,7 +19,7 @@ import java.util.concurrent.ScheduledFuture;
 @Service
 public class MeasurementService {
 
-    private MeasurementRepository measurementRepository;
+    private final MeasurementRepository measurementRepository;
     private final Random random = new Random();
     private final TaskScheduler taskScheduler;
     private final SensorService sensorService;

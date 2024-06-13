@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>5761</IntrospectionStateNumber>
+      <IntrospectionStateNumber>5877</IntrospectionStateNumber>
       <ServerVersion>16.3</ServerVersion>
       <StartupTime>1718302236</StartupTime>
       <TimeZones>true ACDT
@@ -1399,7 +1399,7 @@ true posixrules
 13212||10|C|G
 13212||-9223372036854775808|U|G
 13212||10|U|G</Grants>
-      <IntrospectionStateNumber>5761</IntrospectionStateNumber>
+      <IntrospectionStateNumber>5877</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>root</OwnerName>
     </database>
@@ -4823,11 +4823,514 @@ true posixrules
     <schema id="264" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>5761</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-06-13.18:25:17</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>5877</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-06-13.20:04:09</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
+    <table id="265" parent="264" name="actuator">
+      <ObjectId>41540</ObjectId>
+      <StateNumber>5841</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <table id="266" parent="264" name="farmer">
+      <ObjectId>41546</ObjectId>
+      <StateNumber>5842</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <table id="267" parent="264" name="field">
+      <ObjectId>41553</ObjectId>
+      <StateNumber>5841</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <table id="268" parent="264" name="measurement">
+      <ObjectId>41558</ObjectId>
+      <StateNumber>5830</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <table id="269" parent="264" name="sensor">
+      <ObjectId>41563</ObjectId>
+      <StateNumber>5844</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <table id="270" parent="264" name="watering_log">
+      <ObjectId>41613</ObjectId>
+      <StateNumber>5864</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <table id="271" parent="264" name="watering_scheduler">
+      <ObjectId>41569</ObjectId>
+      <StateNumber>5846</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>root</OwnerName>
+    </table>
+    <check id="272" parent="265" name="actuator_state_check">
+      <ColNames>state</ColNames>
+      <ObjectId>41543</ObjectId>
+      <Predicate>(state)::text = ANY ((ARRAY[&apos;NOT_ASSIGNED&apos;::character varying, &apos;OFF&apos;::character varying, &apos;ON&apos;::character varying])::text[])</Predicate>
+      <StateNumber>5827</StateNumber>
+    </check>
+    <column id="273" parent="265" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5827</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="274" parent="265" name="state">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>5827</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="275" parent="265" name="farmer_id">
+      <DasType>uuid|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>5827</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="276" parent="265" name="field_id">
+      <DasType>uuid|0s</DasType>
+      <Position>4</Position>
+      <StateNumber>5827</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="277" parent="265" name="fk_5g3wc46x2u0sleeq33lb4avlw">
+      <ColNames>farmer_id</ColNames>
+      <ObjectId>41587</ObjectId>
+      <StateNumber>5842</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>41546</RefTableId>
+    </foreign-key>
+    <foreign-key id="278" parent="265" name="fk6w9hgfp68c8so9wpdf31b8ryb">
+      <ColNames>field_id</ColNames>
+      <ObjectId>41582</ObjectId>
+      <StateNumber>5841</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>41553</RefTableId>
+    </foreign-key>
+    <index id="279" parent="265" name="actuator_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41544</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5827</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="280" parent="265" name="uk_kcsq24fipq46q73im99qbycl1">
+      <ColNames>field_id</ColNames>
+      <ObjectId>41574</ObjectId>
+      <StateNumber>5834</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="281" parent="265" name="actuator_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41545</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5827</StateNumber>
+      <UnderlyingIndexId>41544</UnderlyingIndexId>
+    </key>
+    <key id="282" parent="265" name="uk_kcsq24fipq46q73im99qbycl1">
+      <ObjectId>41575</ObjectId>
+      <StateNumber>5834</StateNumber>
+      <UnderlyingIndexId>41574</UnderlyingIndexId>
+    </key>
+    <column id="283" parent="266" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5828</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="284" parent="266" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>5828</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="285" parent="266" name="field_size">
+      <DasType>integer|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>5828</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="286" parent="266" name="first_name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+      <StateNumber>5828</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="287" parent="266" name="last_name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+      <StateNumber>5828</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="288" parent="266" name="password">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>5828</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="289" parent="266" name="farmer_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41551</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5828</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="290" parent="266" name="uk_2gjayjqb4atvs45w8tm4g8t1n">
+      <ColNames>email</ColNames>
+      <ObjectId>41576</ObjectId>
+      <StateNumber>5836</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="291" parent="266" name="farmer_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41552</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5828</StateNumber>
+      <UnderlyingIndexId>41551</UnderlyingIndexId>
+    </key>
+    <key id="292" parent="266" name="uk_2gjayjqb4atvs45w8tm4g8t1n">
+      <ObjectId>41577</ObjectId>
+      <StateNumber>5836</StateNumber>
+      <UnderlyingIndexId>41576</UnderlyingIndexId>
+    </key>
+    <column id="293" parent="267" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5829</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="294" parent="267" name="xcoord">
+      <DasType>integer|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>5829</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="295" parent="267" name="ycoord">
+      <DasType>integer|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>5829</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="296" parent="267" name="farmer_id">
+      <DasType>uuid|0s</DasType>
+      <Position>4</Position>
+      <StateNumber>5829</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="297" parent="267" name="fkm3k0c1bt8gjn19yekgmajx58m">
+      <ColNames>farmer_id</ColNames>
+      <ObjectId>41592</ObjectId>
+      <StateNumber>5843</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>41546</RefTableId>
+    </foreign-key>
+    <index id="298" parent="267" name="field_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41556</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5829</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="299" parent="267" name="field_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41557</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5829</StateNumber>
+      <UnderlyingIndexId>41556</UnderlyingIndexId>
+    </key>
+    <column id="300" parent="268" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="301" parent="268" name="date_time">
+      <DasType>timestamp(6)|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="302" parent="268" name="device_id">
+      <DasType>uuid|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="303" parent="268" name="farmer_id">
+      <DasType>uuid|0s</DasType>
+      <Position>4</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="304" parent="268" name="field_coord">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="305" parent="268" name="humidity">
+      <DasType>numeric(5,1 digit)|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="306" parent="268" name="temperature">
+      <DasType>numeric(5,1 digit)|0s</DasType>
+      <Position>7</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="307" parent="268" name="watering_duration">
+      <DasType>numeric(5,1 digit)|0s</DasType>
+      <Position>8</Position>
+      <StateNumber>5830</StateNumber>
+      <TypeId>1700</TypeId>
+    </column>
+    <index id="308" parent="268" name="measurement_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41561</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5830</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="309" parent="268" name="measurement_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41562</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5830</StateNumber>
+      <UnderlyingIndexId>41561</UnderlyingIndexId>
+    </key>
+    <check id="310" parent="269" name="sensor_state_check">
+      <ColNames>state</ColNames>
+      <ObjectId>41566</ObjectId>
+      <Predicate>(state)::text = ANY ((ARRAY[&apos;NOT_ASSIGNED&apos;::character varying, &apos;OFF&apos;::character varying, &apos;ON&apos;::character varying])::text[])</Predicate>
+      <StateNumber>5831</StateNumber>
+    </check>
+    <column id="311" parent="269" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="312" parent="269" name="state">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="313" parent="269" name="farmer_id">
+      <DasType>uuid|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="314" parent="269" name="interval">
+      <DasType>integer|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="315" parent="269" name="last_humidity_measured">
+      <DasType>numeric(5,1 digit)|0s</DasType>
+      <Position>5</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="316" parent="269" name="last_measurement_time">
+      <DasType>timestamp(6)|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="317" parent="269" name="last_temperature_measured">
+      <DasType>numeric(5,1 digit)|0s</DasType>
+      <Position>7</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="318" parent="269" name="field_id">
+      <DasType>uuid|0s</DasType>
+      <Position>8</Position>
+      <StateNumber>5831</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="319" parent="269" name="fk_53216aybtomroskwj9qb6clo1">
+      <ColNames>farmer_id</ColNames>
+      <ObjectId>41602</ObjectId>
+      <StateNumber>5845</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>41546</RefTableId>
+    </foreign-key>
+    <foreign-key id="320" parent="269" name="fkhsk0dvd9i90lfhadu2ebijcp5">
+      <ColNames>field_id</ColNames>
+      <ObjectId>41597</ObjectId>
+      <StateNumber>5844</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>41553</RefTableId>
+    </foreign-key>
+    <index id="321" parent="269" name="sensor_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41567</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5831</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="322" parent="269" name="uk_3o7yo383vv9aqpykx89sc6aq6">
+      <ColNames>field_id</ColNames>
+      <ObjectId>41578</ObjectId>
+      <StateNumber>5838</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="323" parent="269" name="sensor_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41568</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5831</StateNumber>
+      <UnderlyingIndexId>41567</UnderlyingIndexId>
+    </key>
+    <key id="324" parent="269" name="uk_3o7yo383vv9aqpykx89sc6aq6">
+      <ObjectId>41579</ObjectId>
+      <StateNumber>5838</StateNumber>
+      <UnderlyingIndexId>41578</UnderlyingIndexId>
+    </key>
+    <column id="325" parent="270" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5864</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="326" parent="270" name="date_time">
+      <DasType>timestamp(6)|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>5864</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="327" parent="270" name="message">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>5864</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="328" parent="270" name="watering_log_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41616</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5864</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="329" parent="270" name="watering_log_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41617</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5864</StateNumber>
+      <UnderlyingIndexId>41616</UnderlyingIndexId>
+    </key>
+    <column id="330" parent="271" name="id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>5832</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="331" parent="271" name="begin_date">
+      <DasType>timestamp(6)|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>5832</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="332" parent="271" name="duration">
+      <DasType>real|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>5832</StateNumber>
+      <TypeId>700</TypeId>
+    </column>
+    <column id="333" parent="271" name="end_date">
+      <DasType>timestamp(6)|0s</DasType>
+      <Position>4</Position>
+      <StateNumber>5832</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="334" parent="271" name="humidity_threshold">
+      <DasType>integer|0s</DasType>
+      <Position>5</Position>
+      <StateNumber>5832</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="335" parent="271" name="actuator_id">
+      <DasType>uuid|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>5832</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="336" parent="271" name="fkngvp58jal65j6h4hgw0cwo1q1">
+      <ColNames>actuator_id</ColNames>
+      <ObjectId>41607</ObjectId>
+      <StateNumber>5846</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>41540</RefTableId>
+    </foreign-key>
+    <index id="337" parent="271" name="watering_scheduler_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41572</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5832</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="338" parent="271" name="uk_618mh85sg2d3voijx9leayhc">
+      <ColNames>actuator_id</ColNames>
+      <ObjectId>41580</ObjectId>
+      <StateNumber>5840</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="339" parent="271" name="watering_scheduler_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41573</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>5832</StateNumber>
+      <UnderlyingIndexId>41572</UnderlyingIndexId>
+    </key>
+    <key id="340" parent="271" name="uk_618mh85sg2d3voijx9leayhc">
+      <ObjectId>41581</ObjectId>
+      <StateNumber>5840</StateNumber>
+      <UnderlyingIndexId>41580</UnderlyingIndexId>
+    </key>
   </database-model>
 </dataSource>

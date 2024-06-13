@@ -1,5 +1,6 @@
 package fr.miage.acm.measurementservice.device.actuator.watering.scheduler;
 
+import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import fr.miage.acm.measurementservice.device.actuator.Actuator;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -51,6 +52,14 @@ public class WateringScheduler {
 
     public WateringScheduler() {
         // Default constructor required by JPA
+    }
+
+    public WateringScheduler(ApiWateringScheduler apiWateringScheduler){
+        this.id = apiWateringScheduler.getId();
+        this.beginDate = apiWateringScheduler.getBeginDate();
+        this.endDate = apiWateringScheduler.getEndDate();
+        this.duration = apiWateringScheduler.getDuration();
+        this.humidityThreshold = apiWateringScheduler.getHumidityThreshold();
     }
 
     @Override
