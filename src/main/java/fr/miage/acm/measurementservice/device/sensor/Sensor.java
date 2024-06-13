@@ -1,10 +1,9 @@
 package fr.miage.acm.measurementservice.device.sensor;
 
+import fr.miage.acm.measurementservice.api.ApiSensor;
 import fr.miage.acm.measurementservice.device.Device;
-import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,17 +11,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
 public class Sensor extends Device {
     // Interval between two measurements in seconds
     private int interval;
 
-    @OneToOne
-    @JoinColumn(name = "field_id")
     private Field field;
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float lastTemperatureMeasured;
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float lastHumidityMeasured;
 
     private LocalDateTime lastMeasurementTime;
@@ -38,6 +32,16 @@ public class Sensor extends Device {
 
     public Sensor() {
         // Default constructor required by JPA
+    }
+
+
+    public Sensor(ApiSensor apiSensor) {
+        super(new Farmer(apiSensor.getFarmer()), apiSensor.getState(), apiSensor.getId());
+        this.interval = apiSensor.getInterval();
+        this.field = apiSensor.getField();
+        this.lastTemperatureMeasured = null;
+        this.lastHumidityMeasured = null;
+        this.lastMeasurementTime = null;
     }
 
     @Override

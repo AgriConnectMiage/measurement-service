@@ -6,8 +6,6 @@ import fr.miage.acm.measurementservice.client.ManagementServiceClient;
 import fr.miage.acm.measurementservice.device.actuator.Actuator;
 import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringScheduler;
 import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringSchedulerService;
-import fr.miage.acm.measurementservice.farmer.Farmer;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

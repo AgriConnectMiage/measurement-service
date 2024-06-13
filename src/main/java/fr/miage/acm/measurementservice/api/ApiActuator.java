@@ -19,7 +19,7 @@ public class ApiActuator extends ApiDevice {
     private ApiField field;
 
     public ApiActuator(Actuator actuator) {
-        super(new ApiFarmer(actuator.getFarmer()));
+        super(new ApiFarmer(actuator.getFarmer()), actuator.getId(), actuator.getState());
         this.id = actuator.getId();
         this.state = actuator.getState();
         this.field = new ApiField(actuator.getField());
@@ -29,7 +29,7 @@ public class ApiActuator extends ApiDevice {
     }
 
     public ApiActuator(UUID id, DeviceState state, ApiField field, ApiFarmer apiFarmer) {
-        super(apiFarmer);
+        super(apiFarmer, id, state);
         this.id = id;
         this.state = state;
         this.field = field;

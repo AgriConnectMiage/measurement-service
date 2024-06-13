@@ -2,7 +2,6 @@ package fr.miage.acm.measurementservice.device.actuator.watering.scheduler;
 
 import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import fr.miage.acm.measurementservice.device.actuator.Actuator;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,15 +11,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Entity
 public class WateringScheduler {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "actuator_id", referencedColumnName = "id")
     private Actuator actuator;
 
     private LocalDateTime beginDate;
@@ -29,7 +23,6 @@ public class WateringScheduler {
     // Duration in seconds
     private float duration;
 
-    @Column(nullable = true)
     private Integer humidityThreshold;
 
 

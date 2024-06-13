@@ -16,9 +16,10 @@ public abstract class ApiDevice {
 
     private ApiFarmer farmer;
 
-    public ApiDevice(ApiFarmer farmer) {
-        this.state = DeviceState.NOT_ASSIGNED;
+    public ApiDevice(ApiFarmer farmer, UUID id, DeviceState state) {
+        this.state = state;
         this.farmer = farmer;
+        this.id = id;
     }
 
     public ApiDevice() {

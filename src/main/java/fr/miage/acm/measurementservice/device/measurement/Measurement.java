@@ -1,37 +1,35 @@
 package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.device.Device;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Entity
+@Node("Measurement")
 public class Measurement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private UUID id;
 
     private LocalDateTime dateTime;
-
     private UUID farmerId;
     private String fieldCoord;
     private UUID deviceId;
-
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float humidity;
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float temperature;
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float wateringDuration;
 
     public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float wateringDuration) {
-        this.id = id;
+        this.id = id != null ? id : UUID.randomUUID();
         this.dateTime = dateTime;
         this.deviceId = device.getId();
         this.farmerId = device.getFarmer().getId();
@@ -41,7 +39,8 @@ public class Measurement {
     }
 
     public Measurement() {
-        // Default constructor required by JPA
+        // Default constructor required by Neo4j
+        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -49,10 +48,10 @@ public class Measurement {
         return "Measurement{" +
                 "id=" + id +
                 ", dateTime=" + dateTime +
-                ", sourceId=" + deviceId +
+                ", deviceId=" + deviceId +
                 ", humidity=" + humidity +
                 ", temperature=" + temperature +
-                ", duration=" + wateringDuration +
+                ", wateringDuration=" + wateringDuration +
                 '}';
     }
 }

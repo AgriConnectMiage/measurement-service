@@ -60,6 +60,8 @@ public class MeasurementService {
         // Scheduled task to generate a temperature measurement every interval
         long intervalInMillis = (long) (sensor.getInterval() * 1000);
         ScheduledFuture<?> scheduledTask = taskScheduler.scheduleAtFixedRate(() -> {
+            System.out.println("log sensor avant génération");
+            System.out.println(sensor);
             generateSensorMeasurement(sensor);
         }, intervalInMillis);
         scheduledTasks.put(sensor.getId(), scheduledTask);
@@ -68,8 +70,10 @@ public class MeasurementService {
 
     // Schedule sensor task with id
     public void scheduleSensorTask(UUID sensorId) {
-        Optional<Sensor> sensor = sensorService.findById(sensorId);
-        sensor.ifPresent(this::scheduleSensorTask);
+        Sensor sensor = sensorService.findById(sensorId);
+        if (sensor != null) {
+            scheduleSensorTask(sensor);
+        }
     }
 
 

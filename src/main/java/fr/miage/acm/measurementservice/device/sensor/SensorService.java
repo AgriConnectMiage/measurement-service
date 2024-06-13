@@ -1,5 +1,6 @@
 package fr.miage.acm.measurementservice.device.sensor;
 
+import fr.miage.acm.measurementservice.api.ApiSensor;
 import fr.miage.acm.measurementservice.client.ManagementServiceClient;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,22 @@ public class SensorService {
     }
 
     public List<Sensor> findAll() {
-        return managementServiceClient.getAllSensors();
+        // log before return
+        List<Sensor> sensors = managementServiceClient.getAllSensors();
+        System.out.println("Sensors: " + sensors);
+        return sensors;
+//        return managementServiceClient.getAllSensors();
     }
 
-    public Optional<Sensor> findById(UUID sensorId) {
-        return managementServiceClient.getSensorById(sensorId);
+    public Sensor findById(UUID sensorId) {
+        Optional<ApiSensor> optionalApiSensor = managementServiceClient.getSensorById(sensorId);
+        if(optionalApiSensor.isPresent()) {
+            ApiSensor apiSensor = optionalApiSensor.get();
+            System.out.println(apiSensor);
+            System.out.println(new Sensor(apiSensor));
+            return new Sensor(apiSensor);
+        }
+        return null;
     }
 
 

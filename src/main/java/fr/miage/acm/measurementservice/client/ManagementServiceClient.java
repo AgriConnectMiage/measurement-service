@@ -1,6 +1,7 @@
 package fr.miage.acm.measurementservice.client;
 
 import fr.miage.acm.measurementservice.api.ApiActuator;
+import fr.miage.acm.measurementservice.api.ApiSensor;
 import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import fr.miage.acm.measurementservice.device.sensor.Sensor;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,7 +24,7 @@ public interface ManagementServiceClient {
     List<Sensor> getAllSensors();
 
     @GetMapping("/sensors/{sensorId}")
-    Optional<Sensor> getSensorById(@PathVariable("sensorId") UUID sensorId);
+    Optional<ApiSensor> getSensorById(@PathVariable("sensorId") UUID sensorId);
 
     // update temperature and humidity of sensor
     @PostMapping("/sensors/{sensorId}/measure")
