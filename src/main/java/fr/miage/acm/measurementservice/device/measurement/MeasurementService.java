@@ -2,7 +2,6 @@ package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import fr.miage.acm.measurementservice.device.DeviceState;
-import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringSchedulerClient;
 import fr.miage.acm.measurementservice.device.sensor.Sensor;
 import fr.miage.acm.measurementservice.device.sensor.SensorService;
 import fr.miage.acm.measurementservice.field.Field;
@@ -86,14 +85,11 @@ public class MeasurementService {
         float newHumidity = generateRandomHumidity(sensor);
         measurement.setHumidity(newHumidity);
 
-        sensor.setLastTemperatureMeasured(newTemperature);
-        sensor.setLastHumidityMeasured(newHumidity);
-        sensor.setLastMeasurementTime(LocalDateTime.now());
         // if field has intelligent watering, check if watering is needed and trigger it
         fieldService.checkForIntelligentWatering(sensor.getField(), newHumidity);
         System.out.println("New sensor measurement: " + measurement);
         measurementRepository.save(measurement);
-        sensorService.save(sensor);
+        sensorService.updateMeasures(sensor.getId(), newTemperature, newHumidity);
     }
 
     private Float generateRandomTemperature(Sensor sensor) {

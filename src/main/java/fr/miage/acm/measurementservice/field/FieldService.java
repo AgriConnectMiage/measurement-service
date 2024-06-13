@@ -1,9 +1,7 @@
 package fr.miage.acm.measurementservice.field;
 
 import fr.miage.acm.measurementservice.device.actuator.Actuator;
-import fr.miage.acm.measurementservice.device.actuator.ActuatorRepository;
 import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringScheduler;
-import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringSchedulerClient;
 import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringSchedulerService;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import jakarta.transaction.Transactional;
@@ -16,41 +14,11 @@ import java.util.UUID;
 @Service
 public class FieldService {
 
-    private FieldRepository fieldRepository;
     private WateringSchedulerService wateringSchedulerService;
-    // TODO Bad practice to inject actuator repository here ?
-    private ActuatorRepository actuatorRepository;
 
 
-    public FieldService(FieldRepository fieldRepository, ActuatorRepository actuatorRepository, WateringSchedulerService wateringSchedulerService) {
-        this.fieldRepository = fieldRepository;
+    public FieldService(WateringSchedulerService wateringSchedulerService) {
         this.wateringSchedulerService = wateringSchedulerService;
-        this.actuatorRepository = actuatorRepository;
-    }
-
-    public List<Field> findAll() {
-        return fieldRepository.findAll();
-    }
-
-    public Field save(Field field) {
-        return fieldRepository.save(field);
-    }
-
-    public void delete(Field field) {
-        fieldRepository.delete(field);
-    }
-
-    public Optional<Field> findById(UUID id) {
-        return fieldRepository.findById(id);
-    }
-
-    public List<Field> findByFarmer(Farmer farmer) {
-        return fieldRepository.findByFarmer(farmer);
-    }
-
-    @Transactional
-    public void deleteFieldsByFarmer(Farmer farmer) {
-        fieldRepository.deleteByFarmer(farmer);
     }
 
     public boolean isFieldGettingWatered(Field field) {
