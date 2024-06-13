@@ -4,10 +4,7 @@ import fr.miage.acm.measurementservice.device.Device;
 import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +17,7 @@ public class Sensor extends Device {
     // Interval between two measurements in seconds
     private int interval;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "field_id")
     private Field field;
     @Column(columnDefinition = "NUMERIC(5,1)")

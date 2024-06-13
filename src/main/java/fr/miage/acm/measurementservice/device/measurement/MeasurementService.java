@@ -2,6 +2,7 @@ package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
 import fr.miage.acm.measurementservice.device.DeviceState;
+import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringSchedulerClient;
 import fr.miage.acm.measurementservice.device.sensor.Sensor;
 import fr.miage.acm.measurementservice.device.sensor.SensorService;
 import fr.miage.acm.measurementservice.field.Field;
@@ -26,7 +27,8 @@ public class MeasurementService {
     private final Map<UUID, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
     private final FieldService fieldService;
 
-    public MeasurementService(MeasurementRepository measurementRepository, TaskScheduler taskScheduler, SensorService sensorService, FieldService fieldService) {
+    public MeasurementService(MeasurementRepository measurementRepository, TaskScheduler taskScheduler,
+                              SensorService sensorService, FieldService fieldService) {
         this.measurementRepository = measurementRepository;
         this.taskScheduler = taskScheduler;
         this.sensorService = sensorService;
@@ -81,12 +83,14 @@ public class MeasurementService {
 
         float newTemperature = generateRandomTemperature(sensor);
         measurement.setTemperature(newTemperature);
-        float newHumiditiy = generateRandomHumidity(sensor);
-        measurement.setHumidity(newHumiditiy);
+        float newHumidity = generateRandomHumidity(sensor);
+        measurement.setHumidity(newHumidity);
 
         sensor.setLastTemperatureMeasured(newTemperature);
-        sensor.setLastHumidityMeasured(newHumiditiy);
+        sensor.setLastHumidityMeasured(newHumidity);
         sensor.setLastMeasurementTime(LocalDateTime.now());
+        // if field has intelligent watering, check if watering is needed and trigger it
+        fieldService.checkForIntelligentWatering(sensor.getField(), newHumidity);
         System.out.println("New sensor measurement: " + measurement);
         measurementRepository.save(measurement);
         sensorService.save(sensor);

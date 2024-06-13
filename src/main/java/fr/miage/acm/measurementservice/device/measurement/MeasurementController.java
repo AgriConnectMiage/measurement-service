@@ -19,7 +19,6 @@ public class MeasurementController {
 
     @PostMapping("/watering")
     public Measurement createWateringMeasurement(@RequestBody ApiWateringScheduler apiWateringScheduler) {
-        System.out.println("appelé watering");
         return measurementService.createWateringMeasurement(apiWateringScheduler);
     }
 

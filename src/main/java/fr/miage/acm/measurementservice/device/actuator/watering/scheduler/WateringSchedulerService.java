@@ -15,14 +15,19 @@ import java.util.UUID;
 public class WateringSchedulerService {
 
     private final WateringSchedulerRepository wateringSchedulerRepository;
+    private final WateringSchedulerClient wateringSchedulerClient;
 
 
-    public WateringSchedulerService(WateringSchedulerRepository wateringSchedulerRepository) {
+    public WateringSchedulerService(WateringSchedulerRepository wateringSchedulerRepository, WateringSchedulerClient wateringSchedulerClient) {
         this.wateringSchedulerRepository = wateringSchedulerRepository;
+        this.wateringSchedulerClient = wateringSchedulerClient;
     }
 
     public boolean isWateringInProgress(WateringScheduler wateringScheduler) {
         LocalDateTime now = LocalDateTime.now();
+        if (wateringScheduler.getBeginDate() == null || wateringScheduler.getEndDate() == null) {
+            return false;
+        }
         return wateringScheduler.getBeginDate().isBefore(now) && wateringScheduler.getEndDate().isAfter(now);
     }
 
@@ -32,5 +37,10 @@ public class WateringSchedulerService {
 
     public Optional<WateringScheduler> findByActuator(Actuator actuator) {
         return wateringSchedulerRepository.findByActuator(actuator);
+    }
+
+    public void triggerIntelligentWatering(Actuator actuator, WateringScheduler wateringScheduler) {
+        System.out.println("Triggering intelligent watering for actuator " + actuator.getId() + " and watering scheduler " + wateringScheduler.getId());
+        wateringSchedulerClient.triggerIntelligentWatering(actuator.getId(), wateringScheduler.getId());
     }
 }
