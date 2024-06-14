@@ -7,6 +7,7 @@ import fr.miage.acm.measurementservice.device.sensor.SensorService;
 import fr.miage.acm.measurementservice.field.Field;
 import fr.miage.acm.measurementservice.field.FieldService;
 import jakarta.annotation.PostConstruct;
+import org.springframework.cloud.logging.LoggingRebinder;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,15 @@ public class MeasurementService {
     private final SensorService sensorService;
     private final Map<UUID, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
     private final FieldService fieldService;
+    private final LoggingRebinder loggingRebinder;
 
     public MeasurementService(MeasurementRepository measurementRepository, TaskScheduler taskScheduler,
-                              SensorService sensorService, FieldService fieldService) {
+                              SensorService sensorService, FieldService fieldService, LoggingRebinder loggingRebinder) {
         this.measurementRepository = measurementRepository;
         this.taskScheduler = taskScheduler;
         this.sensorService = sensorService;
         this.fieldService = fieldService;
+        this.loggingRebinder = loggingRebinder;
     }
 
     public Measurement createWateringMeasurement(ApiWateringScheduler apiWateringScheduler) {
@@ -60,8 +63,6 @@ public class MeasurementService {
         // Scheduled task to generate a temperature measurement every interval
         long intervalInMillis = (long) (sensor.getInterval() * 1000);
         ScheduledFuture<?> scheduledTask = taskScheduler.scheduleAtFixedRate(() -> {
-            System.out.println("log sensor avant génération");
-            System.out.println(sensor);
             generateSensorMeasurement(sensor);
         }, intervalInMillis);
         scheduledTasks.put(sensor.getId(), scheduledTask);
@@ -84,6 +85,7 @@ public class MeasurementService {
         measurement.setFarmerId(sensor.getFarmer().getId());
         measurement.setFieldCoord(sensor.getField().getCoord());
 
+        // log sensor last huimidity and temperature
         float newTemperature = generateRandomTemperature(sensor);
         measurement.setTemperature(newTemperature);
         float newHumidity = generateRandomHumidity(sensor);
@@ -91,7 +93,6 @@ public class MeasurementService {
 
         // if field has intelligent watering, check if watering is needed and trigger it
         fieldService.checkForIntelligentWatering(sensor.getField(), newHumidity);
-        System.out.println("New sensor measurement: " + measurement);
         measurementRepository.save(measurement);
         sensorService.updateMeasures(sensor.getId(), newTemperature, newHumidity);
     }
@@ -100,11 +101,14 @@ public class MeasurementService {
         // Generate a random variation between -0.5 and +0.5 degrees
         float newTemperature;
         // Just generate a random temperature between 0 and 45 degrees if current temperature is null
+
         if (sensor.getLastTemperatureMeasured() == null) {
+            System.out.println("passage aléatoire température");
             newTemperature = (float) (Math.round((random.nextFloat() * 45) * 10) / 10.0);
         }
         // if field is getting watered, the temperature decreases based on the time elapsed
         else if (fieldService.isFieldGettingWatered(sensor.getField())) {
+            System.out.println("température : prise en compte de l'arrosage");
             LocalDateTime lastMeasurementTime = sensor.getLastMeasurementTime();
             LocalDateTime now = LocalDateTime.now();
             long secondsElapsed = ChronoUnit.SECONDS.between(lastMeasurementTime, now);
@@ -121,6 +125,7 @@ public class MeasurementService {
         }
         // Otherwise, the new temperature is a random variation between -0.5 and +0.5 degrees
         else {
+            System.out.println("température : variation aléatoire");
             float variation = (random.nextFloat() - 0.5f) * 1.0f;
             newTemperature = sensor.getLastTemperatureMeasured() + variation;
 
@@ -132,7 +137,6 @@ public class MeasurementService {
             }
             newTemperature = Math.round(newTemperature * 10) / 10.0f;
         }
-
         return newTemperature;
     }
 
@@ -175,7 +179,6 @@ public class MeasurementService {
             }
             newHumidity = Math.round(newHumidity * 10) / 10.0f;
         }
-
         return newHumidity;
     }
 

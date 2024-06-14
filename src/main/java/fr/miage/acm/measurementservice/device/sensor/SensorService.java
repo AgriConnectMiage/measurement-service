@@ -19,19 +19,13 @@ public class SensorService {
     }
 
     public List<Sensor> findAll() {
-        // log before return
-        List<Sensor> sensors = managementServiceClient.getAllSensors();
-        System.out.println("Sensors: " + sensors);
-        return sensors;
-//        return managementServiceClient.getAllSensors();
+        return managementServiceClient.getAllSensors();
     }
 
     public Sensor findById(UUID sensorId) {
         Optional<ApiSensor> optionalApiSensor = managementServiceClient.getSensorById(sensorId);
         if(optionalApiSensor.isPresent()) {
             ApiSensor apiSensor = optionalApiSensor.get();
-            System.out.println(apiSensor);
-            System.out.println(new Sensor(apiSensor));
             return new Sensor(apiSensor);
         }
         return null;

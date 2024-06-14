@@ -55,9 +55,9 @@ public class FieldService {
             return;
         }
         WateringScheduler wateringScheduler = new WateringScheduler(optionalWateringScheduler.get());
-        // if humidity threshold is set and humidity is below threshold and both beginDate and endDate are null, trigger intelligent watering
+        // if humidity threshold is set and humidity is below threshold and we are not between beginDate and endDate right now, trigger intelligent watering
         if (wateringScheduler.getHumidityThreshold() != null && newHumidity < wateringScheduler.getHumidityThreshold()
-                && wateringScheduler.getBeginDate() == null && wateringScheduler.getEndDate() == null) {
+                && !wateringSchedulerService.isWateringInProgress(wateringScheduler)) {
             wateringSchedulerService.triggerIntelligentWatering(actuator, wateringScheduler);
         }
     }
