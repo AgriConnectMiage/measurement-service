@@ -1,7 +1,11 @@
 package fr.miage.acm.measurementservice.field;
 
-import fr.miage.acm.measurementservice.farmer.Farmer;
-import jakarta.transaction.Transactional;
+import fr.miage.acm.measurementservice.api.ApiActuator;
+import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
+import fr.miage.acm.measurementservice.client.ManagementServiceClient;
+import fr.miage.acm.measurementservice.device.actuator.Actuator;
+import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringScheduler;
+import fr.miage.acm.measurementservice.device.actuator.watering.scheduler.WateringSchedulerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,34 +15,50 @@ import java.util.UUID;
 @Service
 public class FieldService {
 
-    private FieldRepository fieldRepository;
+    private final ManagementServiceClient managementServiceClient;
+    private WateringSchedulerService wateringSchedulerService;
 
-    public FieldService(FieldRepository fieldRepository) {
-        this.fieldRepository = fieldRepository;
+
+    public FieldService(WateringSchedulerService wateringSchedulerService, ManagementServiceClient managementServiceClient) {
+        this.wateringSchedulerService = wateringSchedulerService;
+        this.managementServiceClient = managementServiceClient;
     }
 
-    public List<Field> findAll() {
-        return fieldRepository.findAll();
+    public boolean isFieldGettingWatered(Field field) {
+        Optional<ApiActuator> optionalApiActuator = managementServiceClient.findActuatorByField(field.getId());
+        if (optionalApiActuator.isEmpty()) {
+            return false;
+        }
+        Actuator actuator = new Actuator(optionalApiActuator.get());
+
+        // get watering scheduler for actuator
+        Optional<ApiWateringScheduler> optionalApiWateringScheduler = wateringSchedulerService.findByActuator(actuator);
+        if (optionalApiWateringScheduler.isEmpty()) {
+            return false;
+        }
+        WateringScheduler wateringScheduler = new WateringScheduler(optionalApiWateringScheduler.get());
+        return wateringSchedulerService.isWateringInProgress(wateringScheduler);
+
     }
 
-    public Field save(Field field) {
-        return fieldRepository.save(field);
-    }
+    // check if the field has an actuator which has an actuator with intelligent watering (humidity threshold != null)
+    public void checkForIntelligentWatering(Field field, float newHumidity) {
+        Optional<ApiActuator> optionalApiActuator = managementServiceClient.findActuatorByField(field.getId());
+        if (optionalApiActuator.isEmpty()) {
+            return;
+        }
+        Actuator actuator = new Actuator(optionalApiActuator.get());
 
-    public void delete(Field field) {
-        fieldRepository.delete(field);
-    }
-
-    public Optional<Field> findById(UUID id) {
-        return fieldRepository.findById(id);
-    }
-    
-    public List<Field> findByFarmer(Farmer farmer) {
-        return fieldRepository.findByFarmer(farmer);
-    }
-
-    @Transactional
-    public void deleteFieldsByFarmer(Farmer farmer) {
-        fieldRepository.deleteByFarmer(farmer);
+        // get watering scheduler for actuator
+        Optional<ApiWateringScheduler> optionalWateringScheduler = wateringSchedulerService.findByActuator(actuator);
+        if (optionalWateringScheduler.isEmpty()) {
+            return;
+        }
+        WateringScheduler wateringScheduler = new WateringScheduler(optionalWateringScheduler.get());
+        // if humidity threshold is set and humidity is below threshold and we are not between beginDate and endDate right now, trigger intelligent watering
+        if (wateringScheduler.getHumidityThreshold() != null && newHumidity < wateringScheduler.getHumidityThreshold()
+                && !wateringSchedulerService.isWateringInProgress(wateringScheduler)) {
+            wateringSchedulerService.triggerIntelligentWatering(actuator, wateringScheduler);
+        }
     }
 }

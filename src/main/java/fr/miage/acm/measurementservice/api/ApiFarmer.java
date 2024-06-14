@@ -14,6 +14,7 @@ public class ApiFarmer {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private Integer fieldSize;
 
     public ApiFarmer(Farmer farmer) {
@@ -21,19 +22,21 @@ public class ApiFarmer {
         this.firstName = farmer.getFirstName();
         this.lastName = farmer.getLastName();
         this.email = farmer.getEmail();
+        this.password = farmer.getPassword();
         this.fieldSize = farmer.getFieldSize();
     }
 
     public ApiFarmer() {
     }
 
-    public ApiFarmer(UUID id, String firstName, String lastName, String email, Integer fieldSize) {
+    public ApiFarmer(UUID id, String firstName, String lastName, String email, String password, Integer fieldSize) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.fieldSize = fieldSize;
     }
+
 
 
     @Override

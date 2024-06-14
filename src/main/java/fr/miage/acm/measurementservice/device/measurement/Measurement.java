@@ -1,47 +1,46 @@
 package fr.miage.acm.measurementservice.device.measurement;
 
 import fr.miage.acm.measurementservice.device.Device;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Entity
+@Node("Measurement")
 public class Measurement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private UUID id;
 
     private LocalDateTime dateTime;
-
-    private String farmerEmail;
+    private UUID farmerId;
     private String fieldCoord;
     private UUID deviceId;
+    private Float humidity;
+    private Float temperature;
+    private Float wateringDuration;
 
-    private Float humidity; // Using Float to allow null values
-    private Float temperature; // Using Float to allow null values
-    private Float duration; // Using Float to allow null values
-
-    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float duration) {
-        this.id = id;
+    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float wateringDuration) {
+        this.id = id != null ? id : UUID.randomUUID();
         this.dateTime = dateTime;
         this.deviceId = device.getId();
-        this.farmerEmail = device.getFarmer().getEmail();
+        this.farmerId = device.getFarmer().getId();
         this.humidity = humidity;
         this.temperature = temperature;
-        this.duration = duration;
+        this.wateringDuration = wateringDuration;
     }
 
     public Measurement() {
-        // Default constructor required by JPA
+        // Default constructor required by Neo4j
+        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -49,10 +48,10 @@ public class Measurement {
         return "Measurement{" +
                 "id=" + id +
                 ", dateTime=" + dateTime +
-                ", sourceId=" + deviceId +
+                ", deviceId=" + deviceId +
                 ", humidity=" + humidity +
                 ", temperature=" + temperature +
-                ", duration=" + duration +
+                ", wateringDuration=" + wateringDuration +
                 '}';
     }
 }

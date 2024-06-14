@@ -1,38 +1,47 @@
 package fr.miage.acm.measurementservice.device.sensor;
 
+import fr.miage.acm.measurementservice.api.ApiSensor;
 import fr.miage.acm.measurementservice.device.Device;
-import fr.miage.acm.measurementservice.device.DeviceState;
 import fr.miage.acm.measurementservice.farmer.Farmer;
 import fr.miage.acm.measurementservice.field.Field;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-@Entity
 public class Sensor extends Device {
     // Interval between two measurements in seconds
-    private float interval;
+    private int interval;
 
-    @ManyToOne
-    @JoinColumn(name = "field_id")
     private Field field;
-    private Integer currentTemperature;
-    private Integer currentHumidity;
+    private Float lastTemperatureMeasured;
+    private Float lastHumidityMeasured;
+
+    private LocalDateTime lastMeasurementTime;
 
     public Sensor(Farmer farmer) {
         super(farmer);
         this.interval = 5;
         this.field = null;
-        this.currentTemperature = null;
-        this.currentHumidity = null;
+        this.lastTemperatureMeasured = null;
+        this.lastHumidityMeasured = null;
+        this.lastMeasurementTime = null;
     }
 
     public Sensor() {
         // Default constructor required by JPA
+    }
+
+
+    public Sensor(ApiSensor apiSensor) {
+        super(new Farmer(apiSensor.getFarmer()), apiSensor.getState(), apiSensor.getId());
+        this.interval = apiSensor.getInterval();
+        this.field = apiSensor.getField();
+        this.lastTemperatureMeasured = apiSensor.getLastTemperatureMeasured();
+        this.lastHumidityMeasured = apiSensor.getLastHumidityMeasured();
+        this.lastMeasurementTime = apiSensor.getLastMeasurementTime();
     }
 
     @Override
@@ -42,23 +51,12 @@ public class Sensor extends Device {
                 ", state=" + getState() +
                 ", farmer=" + getFarmer() +
                 ", field=" + getField() +
-                ", currentTemperature=" + getCurrentTemperature() +
-                ", currentHumidity=" + getCurrentHumidity() +
+                ", lastTemperatureMeasured=" + getLastTemperatureMeasured() +
+                ", lastHumidityMeasured=" + getLastHumidityMeasured() +
                 '}';
     }
 
-        public void setState(DeviceState newState) {
-        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && this.getField() == null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
-        }
-        if (newState == DeviceState.NOT_ASSIGNED && this.getField() != null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
-        }
-        this.state = newState;
-        return;
-    }
-
-    public void setInterval(float interval) {
+    public void setInterval(int interval) {
         if (interval <= 0) {
             throw new IllegalArgumentException("Interval must be positive");
         }

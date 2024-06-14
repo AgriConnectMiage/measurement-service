@@ -1,6 +1,7 @@
-package fr.miage.acm.measurementservice.device.actuator;
+package fr.miage.acm.measurementservice.device.actuator.watering.scheduler;
 
-import jakarta.persistence.*;
+import fr.miage.acm.measurementservice.api.ApiWateringScheduler;
+import fr.miage.acm.measurementservice.device.actuator.Actuator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,15 +11,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Entity
 public class WateringScheduler {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "actuator_id", referencedColumnName = "id")
     private Actuator actuator;
 
     private LocalDateTime beginDate;
@@ -27,27 +23,13 @@ public class WateringScheduler {
     // Duration in seconds
     private float duration;
 
-    @Column(nullable = true)
     private Integer humidityThreshold;
 
-    public WateringScheduler(LocalDateTime beginDate, LocalDateTime endDate, Integer humidityThreshold) {
-        this.beginDate = beginDate;
-        this.endDate = endDate;
-        this.duration = (endDate != null && beginDate != null) ? Timestamp.valueOf(endDate).getTime() - Timestamp.valueOf(beginDate).getTime() : 0;
-        this.humidityThreshold = humidityThreshold;
-    }
 
     public WateringScheduler(LocalDateTime beginDate, LocalDateTime endDate) {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.duration = (endDate != null && beginDate != null) ? Timestamp.valueOf(endDate).getTime() - Timestamp.valueOf(beginDate).getTime() : 0;
-    }
-
-    public WateringScheduler(LocalDateTime beginDate, float duration, Integer humidityThreshold) {
-        this.beginDate = beginDate;
-        this.duration = duration;
-        this.endDate = beginDate.plusSeconds((long) duration);
-        this.humidityThreshold = humidityThreshold;
     }
 
     public WateringScheduler(LocalDateTime beginDate, float duration) {
@@ -56,8 +38,21 @@ public class WateringScheduler {
         this.endDate = beginDate.plusSeconds((long) duration);
     }
 
+    public WateringScheduler(Integer humidityThreshold, float duration) {
+        this.humidityThreshold = humidityThreshold;
+        this.duration = duration;
+    }
+
     public WateringScheduler() {
         // Default constructor required by JPA
+    }
+
+    public WateringScheduler(ApiWateringScheduler apiWateringScheduler){
+        this.id = apiWateringScheduler.getId();
+        this.beginDate = apiWateringScheduler.getBeginDate();
+        this.endDate = apiWateringScheduler.getEndDate();
+        this.duration = apiWateringScheduler.getDuration();
+        this.humidityThreshold = apiWateringScheduler.getHumidityThreshold();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package fr.miage.acm.measurementservice.farmer;
 
-import jakarta.persistence.*;
+import fr.miage.acm.measurementservice.api.ApiFarmer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,16 +8,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Entity
 public class Farmer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String firstName;
     private String lastName;
-    @Column(unique = true, nullable = false)
     private String email;
     private String password;
     private Integer fieldSize;
@@ -32,6 +28,15 @@ public class Farmer {
 
     public Farmer() {
         // Default constructor required by JPA
+    }
+
+    public Farmer(ApiFarmer apiFarmer) {
+        this.id = apiFarmer.getId();
+        this.firstName = apiFarmer.getFirstName();
+        this.lastName = apiFarmer.getLastName();
+        this.email = apiFarmer.getEmail();
+        this.password = apiFarmer.getPassword();
+        this.fieldSize = apiFarmer.getFieldSize();
     }
 
     @Override
