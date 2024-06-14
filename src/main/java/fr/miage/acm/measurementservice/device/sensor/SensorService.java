@@ -21,7 +21,6 @@ public class SensorService {
 
     public List<Sensor> findAll() {
         List<ApiSensor> apiSensors = managementServiceClient.getAllSensors();
-        System.out.println(apiSensors);
         // convert ApiSensor to Sensor with for each loop
         List<Sensor> sensors = new ArrayList<>();
         for (ApiSensor apiSensor : apiSensors) {

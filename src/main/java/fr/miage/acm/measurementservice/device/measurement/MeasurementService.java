@@ -68,15 +68,12 @@ public class MeasurementService {
         scheduledTasks.put(sensor.getId(), scheduledTask);
     }
 
-
-    // Schedule sensor task with id
     public void scheduleSensorTask(UUID sensorId) {
         Sensor sensor = sensorService.findById(sensorId);
         if (sensor != null) {
             scheduleSensorTask(sensor);
         }
     }
-
 
     private void generateSensorMeasurement(Sensor sensor) {
         Measurement measurement = new Measurement();
@@ -85,7 +82,7 @@ public class MeasurementService {
         measurement.setFarmerId(sensor.getFarmer().getId());
         measurement.setFieldCoord(sensor.getField().getCoord());
 
-        // log sensor last huimidity and temperature
+        // log sensor last humidity and temperature
         float newTemperature = generateRandomTemperature(sensor);
         measurement.setTemperature(newTemperature);
         float newHumidity = generateRandomHumidity(sensor);
@@ -93,27 +90,20 @@ public class MeasurementService {
 
         // if field has intelligent watering, check if watering is needed and trigger it
         fieldService.checkForIntelligentWatering(sensor.getField(), newHumidity);
+        System.out.println("New sensor measurement: " + measurement);
         measurementRepository.save(measurement);
         sensorService.updateMeasures(sensor.getId(), newTemperature, newHumidity);
     }
 
     private Float generateRandomTemperature(Sensor sensor) {
-        // Generate a random variation between -0.5 and +0.5 degrees
         float newTemperature;
-        // Just generate a random temperature between 0 and 45 degrees if current temperature is null
-
         if (sensor.getLastTemperatureMeasured() == null) {
-            System.out.println("passage aléatoire température");
             newTemperature = (float) (Math.round((random.nextFloat() * 45) * 10) / 10.0);
-        }
-        // if field is getting watered, the temperature decreases based on the time elapsed
-        else if (fieldService.isFieldGettingWatered(sensor.getField())) {
-            System.out.println("température : prise en compte de l'arrosage");
+        } else if (fieldService.isFieldGettingWatered(sensor.getField())) {
             LocalDateTime lastMeasurementTime = sensor.getLastMeasurementTime();
             LocalDateTime now = LocalDateTime.now();
             long secondsElapsed = ChronoUnit.SECONDS.between(lastMeasurementTime, now);
 
-            // Decrease temperature based on time elapsed, e.g., 0.1 degree per second
             float decreaseRate = 0.1f;
             float decreaseAmount = decreaseRate * secondsElapsed;
             newTemperature = sensor.getLastTemperatureMeasured() - decreaseAmount;
@@ -122,13 +112,9 @@ public class MeasurementService {
                 newTemperature = 0;
             }
             newTemperature = Math.round(newTemperature * 10) / 10.0f;
-        }
-        // Otherwise, the new temperature is a random variation between -0.5 and +0.5 degrees
-        else {
-            System.out.println("température : variation aléatoire");
+        } else {
             float variation = (random.nextFloat() - 0.5f) * 1.0f;
             newTemperature = sensor.getLastTemperatureMeasured() + variation;
-
 
             if (newTemperature < 0) {
                 newTemperature = 0;
@@ -141,23 +127,16 @@ public class MeasurementService {
     }
 
     private Float generateRandomHumidity(Sensor sensor) {
-        // Generate a random variation between -0.5 and +0.5%
         float newHumidity;
-        // get field linked to sensor
         Field field = sensor.getField();
 
-        // Just generate a random humidity between 0 and 100% if current humidity is null
         if (sensor.getLastHumidityMeasured() == null) {
             newHumidity = (float) (Math.round((random.nextFloat() * 100) * 10) / 10.0);
-        }
-        // if field is getting watered, the humidity increases based on the time elapsed
-        // e.g., 0.1% per second
-        else if (fieldService.isFieldGettingWatered(field)) {
+        } else if (fieldService.isFieldGettingWatered(field)) {
             LocalDateTime lastMeasurementTime = sensor.getLastMeasurementTime();
             LocalDateTime now = LocalDateTime.now();
             long secondsElapsed = ChronoUnit.SECONDS.between(lastMeasurementTime, now);
 
-            // Increase humidity based on time elapsed, e.g., 0.1% per second
             float increaseRate = 0.1f;
             float increaseAmount = increaseRate * secondsElapsed;
             newHumidity = sensor.getLastHumidityMeasured() + increaseAmount;
@@ -166,9 +145,7 @@ public class MeasurementService {
                 newHumidity = 100;
             }
             newHumidity = Math.round(newHumidity * 10) / 10.0f;
-        }
-        // Otherwise, the new humidity is a random variation between -0.5 and +0.5%
-        else {
+        } else {
             float variation = (random.nextFloat() - 0.5f) * 1.0f;
             newHumidity = sensor.getLastHumidityMeasured() + variation;
 
@@ -182,7 +159,6 @@ public class MeasurementService {
         return newHumidity;
     }
 
-
     public void unscheduleSensorTask(UUID sensorId) {
         ScheduledFuture<?> scheduledTask = scheduledTasks.get(sensorId);
         if (scheduledTask != null) {
@@ -192,8 +168,13 @@ public class MeasurementService {
     }
 
     public void changeSensorInterval(UUID sensorId, int interval) {
-        unscheduleSensorTask(sensorId);
-        scheduleSensorTask(sensorId);
+        synchronized (this) {
+            unscheduleSensorTask(sensorId);
+            Sensor sensor = sensorService.findById(sensorId);
+            if (sensor != null) {
+                sensor.setInterval(interval);
+                scheduleSensorTask(sensor);
+            }
+        }
     }
-
 }

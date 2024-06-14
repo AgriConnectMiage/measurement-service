@@ -39,9 +39,9 @@ public class Sensor extends Device {
         super(new Farmer(apiSensor.getFarmer()), apiSensor.getState(), apiSensor.getId());
         this.interval = apiSensor.getInterval();
         this.field = apiSensor.getField();
-        this.lastTemperatureMeasured = null;
-        this.lastHumidityMeasured = null;
-        this.lastMeasurementTime = null;
+        this.lastTemperatureMeasured = apiSensor.getLastTemperatureMeasured();
+        this.lastHumidityMeasured = apiSensor.getLastHumidityMeasured();
+        this.lastMeasurementTime = apiSensor.getLastMeasurementTime();
     }
 
     @Override
