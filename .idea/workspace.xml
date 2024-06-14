@@ -7,14 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: Switched Measurement to Neo4J">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+    <list default="true" id="33021b7f-b8ea-4be1-8e97-f7366a9e184b" name="Changes" comment="chore: fixed some watering features">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/measurement/MeasurementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/client/ManagementServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/client/ManagementServiceClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/SensorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/device/sensor/SensorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/field/FieldService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/miage/acm/measurementservice/field/FieldService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +152,8 @@
       <workItem from="1718315759729" duration="37000" />
       <workItem from="1718367204685" duration="972000" />
       <workItem from="1718369562450" duration="1172000" />
-      <workItem from="1718374318849" duration="2198000" />
+      <workItem from="1718374318849" duration="2301000" />
+      <workItem from="1718381156713" duration="330000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Implementing measurement scheduling">
       <option name="closed" value="true" />
@@ -254,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718315792551</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="chore: fixed some watering features">
+      <option name="closed" value="true" />
+      <created>1718376646707</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1718376646707</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,6 +305,7 @@
     <MESSAGE value="chore: added management service client sensor and wateringscheduler methods" />
     <MESSAGE value="chore: before setting mongodb" />
     <MESSAGE value="chore: Switched Measurement to Neo4J" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: Switched Measurement to Neo4J" />
+    <MESSAGE value="chore: fixed some watering features" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: fixed some watering features" />
   </component>
 </project>

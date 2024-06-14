@@ -21,7 +21,7 @@ public interface ManagementServiceClient {
     Optional<ApiWateringScheduler> findByActuator(@PathVariable("actuatorId") UUID actuatorId);
 
     @GetMapping("/sensors")
-    List<Sensor> getAllSensors();
+    List<ApiSensor> getAllSensors();
 
     @GetMapping("/sensors/{sensorId}")
     Optional<ApiSensor> getSensorById(@PathVariable("sensorId") UUID sensorId);
